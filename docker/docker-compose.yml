@@ -15,7 +15,7 @@ services:
         restart: unless-stopped
         networks:
             - monochrome-network
-            - dokploy-treafik # You must add the network Traefik is on
+            - dokploy-network # You must add the network Traefik is on
         labels:
             - "traefik.enable=true"
             # Replace 'yourdomain.com' with your actual domain
