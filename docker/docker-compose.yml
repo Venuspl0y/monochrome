@@ -12,6 +12,8 @@ services:
                 - POCKETBASE_URL=${POCKETBASE_URL}
                 - SESSION_MAX_AGE=${SESSION_MAX_AGE}
         container_name: monochrome
+        ports:
+          - "4173:4173"
         restart: unless-stopped
         networks:
             - monochrome-network
