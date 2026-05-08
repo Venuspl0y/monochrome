@@ -17,6 +17,17 @@ services:
         restart: unless-stopped
         networks:
             - monochrome-network
+            - traefik-network # You must add the network Traefik is on
+        labels:
+            - "traefik.enable=true"
+            # Replace 'yourdomain.com' with your actual domain
+            - "traefik.http.routers.monochrome.rule=Host(`mono.wcalenielajon.pl`)"
+            - "traefik.http.routers.monochrome.entrypoints=websecure"
+            - "traefik.http.routers.monochrome.tls=true"
+            # 'letsencrypt' must match the name of the resolver in your traefik.yml
+            - "traefik.http.routers.monochrome.tls.certresolver=letsencrypt"
+            # Tell Traefik which internal port to send traffic to
+            - "traefik.http.services.monochrome.loadbalancer.server.port=80"
         healthcheck:
             test: ['CMD', 'wget', '--no-verbose', '--tries=1', '--spider', 'http://localhost:4173/']
             interval: 30s
@@ -69,18 +80,8 @@ services:
             - monochrome-network
 
 networks:
-    monochrome-network
-    traefik-network # You must add the network Traefik is on
-        labels:
-            - "traefik.enable=true"
-            # Replace 'yourdomain.com' with your actual domain
-            - "traefik.http.routers.monochrome.rule=Host(`mono.wcalenielajon.pl`)"
-            - "traefik.http.routers.monochrome.entrypoints=websecure"
-            - "traefik.http.routers.monochrome.tls=true"
-            # 'letsencrypt' must match the name of the resolver in your traefik.yml
-            - "traefik.http.routers.monochrome.tls.certresolver=letsencrypt"
-            # Tell Traefik which internal port to send traffic to
-            - "traefik.http.services.monochrome.loadbalancer.server.port=80"
+    monochrome-network:
+        driver: bridge
     
 
 volumes:
