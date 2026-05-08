@@ -12,12 +12,10 @@ services:
                 - POCKETBASE_URL=${POCKETBASE_URL}
                 - SESSION_MAX_AGE=${SESSION_MAX_AGE}
         container_name: monochrome
-        ports:
-          - "4173:80"
         restart: unless-stopped
         networks:
             - monochrome-network
-            - traefik-network # You must add the network Traefik is on
+            - dokploy-treafik # You must add the network Traefik is on
         labels:
             - "traefik.enable=true"
             # Replace 'yourdomain.com' with your actual domain
