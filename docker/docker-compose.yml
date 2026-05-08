@@ -68,9 +68,9 @@ services:
         networks:
             - monochrome-network
 
-    networks:
-        - monochrome-network
-        - traefik-network # You must add the network Traefik is on
+networks:
+    monochrome-network
+    traefik-network # You must add the network Traefik is on
         labels:
             - "traefik.enable=true"
             # Replace 'yourdomain.com' with your actual domain
